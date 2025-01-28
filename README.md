@@ -1,112 +1,83 @@
-<p  align="center">
-  <img src='logo.png' width='200'>
-</p>
+# PSA: Differentially Private Steering for LLM Alignment
 
-# iclr2025_psa
 [![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://put-here-your-paper.com)
-[![License](https://img.shields.io/github/license/UKPLab/iclr2025-psa)](https://opensource.org/licenses/Apache-2.0)
-[![Python Versions](https://img.shields.io/badge/Python-3.9-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![License](https://img.shields.io/github/license/UKPLab/POATE-attack)](https://opensource.org/licenses/Apache-2.0)
+[![Python Versions](https://img.shields.io/badge/Python-3.10-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/UKPLab/iclr2025-psa/actions/workflows/main.yml/badge.svg)](https://github.com/UKPLab/iclr2025-psa/actions/workflows/main.yml)
 
-This is the official template for new Python projects at UKP Lab. It was adapted for the needs of UKP Lab from the excellent [python-project-template](https://github.com/rochacbruno/python-project-template/) by [rochacbruno](https://github.com/rochacbruno).
-
-It should help you start your project and give you continuous status updates on the development through [GitHub Actions](https://docs.github.com/en/actions).
-
-> **Abstract:** The study of natural language processing (NLP) has gained increasing importance in recent years, with applications ranging from machine translation to sentiment analysis. Properly managing Python projects in this domain is of paramount importance to ensure reproducibility and facilitate collaboration. The template provides a structured starting point for projects and offers continuous status updates on development through GitHub Actions. Key features include a basic setup.py file for installation, packaging, and distribution, documentation structure using mkdocs, testing structure using pytest, code linting with pylint, and entry points for executing the program with basic CLI argument parsing. Additionally, the template incorporates continuous integration using GitHub Actions with jobs to check, lint, and test the project, ensuring robustness and reliability throughout the development process.
-
-Contact person: [Federico Tiblias](mailto:federico.tiblias@tu-darmstadt.de) 
+> **Abstract:**
+> Aligning Large Language Models (LLMs) with human values and away from undesirable behaviors (such as hallucination) has become increasingly important. 
+> Recently, steering LLMs towards a desired behavior via activation editing has emerged as an effective method to mitigate harmful  generations at inference-time. 
+> Activation editing modifies LLM representations by preserving information from positive demonstrations (e.g., truthful) and minimising information from negative demonstrations (e.g., hallucinations). 
+> When these demonstrations come from a private dataset, the aligned LLM may leak private information contained in those private samples. 
+> In this work, we present the first study of aligning LLM behavior with private datasets. 
+> Our work proposes the Private Steering for LLM Alignment (PSA) algorithm to edit LLM activations with differential privacy (DP) guarantees. 
+> We conduct extensive experiments on seven different benchmarks with open-source LLMs of different sizes (0.5B to 7B) and model families (LlaMa, Qwen, Mistral and Gemma). 
+> Our results show that PSA achieves DP guarantees for LLM alignment with minimal loss in performance, including alignment metrics, open-ended text generation quality, and general-purpose reasoning. 
+> We also develop the first Membership Inference Attack (MIA) for evaluating and auditing the empirical privacy for the problem of LLM steering via activation editing. 
+> Our attack is tailored for activation editing and relies solely on the generated texts without their associated probabilities. 
+> Our experiments support the theoretical guarantees by showing improved guarantees for our PSA algorithm compared to several existing non-private techniques.
+---
+Contact person: [Anmol Goel](mailto:anmol.goel@tu-darmstadt.de) 
 
 [UKP Lab](https://www.ukp.tu-darmstadt.de/) | [TU Darmstadt](https://www.tu-darmstadt.de/
 )
 
-Don't hesitate to send us an e-mail or report an issue, if something is broken (and it shouldn't be) or if you have further questions.
+Don't hesitate to send us an e-mail for issues or further questions.
 
+---
 
-## Getting Started
+### Our Framework
+![PSA Framework](./psa_diag.jpg)
 
-> **DO NOT CLONE OR FORK**
+---
 
-If you want to set up this template:
-
-1. Request a repository on UKP Lab's GitHub by following the standard procedure on the wiki. It will install the template directly. Alternatively, set it up in your personal GitHub account by clicking **[Use this template](https://github.com/rochacbruno/python-project-template/generate)**.
-2. Wait until the first run of CI finishes. Github Actions will commit to your new repo with a "✅ Ready to clone and code" message.
-3. Delete optional files: 
-    - If you don't need automatic documentation generation, you can delete folder `docs`, file `.github\workflows\docs.yml` and `mkdocs.yml`
-    - If you don't want automatic testing, you can delete folder `tests` and file `.github\workflows\tests.yml`
-4. Prepare a virtual environment:
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install .
-pip install -r requirements-dev.txt # Only needed for development
-```
-5. Adapt anything else (for example this file) to your project. 
-
-6. Read the file [ABOUT_THIS_TEMPLATE.md](ABOUT_THIS_TEMPLATE.md)  for more information about development.
-
-## Usage
-
-### Using the classes
-
-To import classes/methods of `iclr2025_psa` from inside the package itself you can use relative imports: 
-
-```py
-from .base import BaseClass # Notice how I omit the package name
-
-BaseClass().something()
-```
-
-To import classes/methods from outside the package (e.g. when you want to use the package in some other project) you can instead refer to the package name:
-
-```py
-from iclr2025_psa import BaseClass # Notice how I omit the file name
-from iclr2025_psa.subpackage import SubPackageClass # Here it's necessary because it's a subpackage
-
-BaseClass().something()
-SubPackageClass().something()
-```
-
-### Using scripts
-
-This is how you can use `iclr2025_psa` from command line:
+### :rocket: Getting Started :rocket:
 
 ```bash
-$ python -m iclr2025_psa
+# create a virtual environment (e.g. conda)
+conda create -n dp-steering python=3.10
+conda activate dp-steering
+
+# Clone the repository
+git clone https://github.com/UKPLab/iclr2025-psa.git
+
+# Change working directory
+cd iclr2025-psa
+
+# install the requirements
+pip install -r requirements.txt
 ```
 
-### Expected results
+---
 
-After running the experiments, you should expect the following results:
+### Private Steering
 
-(Feel free to describe your expected results here...)
+```bash
+python run.py \
+--model "meta-llama/Llama-2-7B-chat-hf" \
+--dataset "Sycophancy" \
+--layers 11 12 13 14 15 \   # the layers to be manipulated with PSA
+--noise_multiplier 0.02     # controls the amount of random noise 
+```
 
-### Parameter description
+---
 
-* `x, --xxxx`: This parameter does something nice
+### GPT-4 Evals
 
-* ...
+We use the same code, evaluation setup and prompts as [CAA](https://github.com/nrimsky/CAA).
 
-* `z, --zzzz`: This parameter does something even nicer
-
-## Development
-
-Read the FAQs in [ABOUT_THIS_TEMPLATE.md](ABOUT_THIS_TEMPLATE.md) to learn more about how this template works and where you should put your classes & methods. Make sure you've correctly installed `requirements-dev.txt` dependencies
 
 ## Cite
 
 Please use the following citation:
 
 ```
-@InProceedings{smith:20xx:CONFERENCE_TITLE,
-  author    = {Smith, John},
-  title     = {My Paper Title},
-  booktitle = {Proceedings of the 20XX Conference on XXXX},
-  month     = mmm,
-  year      = {20xx},
-  address   = {Gotham City, USA},
-  publisher = {Association for XXX},
-  pages     = {XXXX--XXXX},
-  url       = {http://xxxx.xxx}
+@inproceedings{goel-2025-psa,
+      title={PSA: Differentially Private Steering for Large Language Model Alignment}, 
+      author={Anmol Goel and Yaxi Hu and Iryna Gurevych and Amartya Sanyal},
+      year={2025},
+      publisher={arXiv}, 
 }
 ```
 
