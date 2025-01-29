@@ -5,6 +5,11 @@
 [![Python Versions](https://img.shields.io/badge/Python-3.10-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/UKPLab/iclr2025-psa/actions/workflows/main.yml/badge.svg)](https://github.com/UKPLab/iclr2025-psa/actions/workflows/main.yml)
 
+This is the code implementation for the ICLR 2025 paper "PSA: Differentially Private Steering for Large Language Model Alignment". This experimental code is a cleaned-up and condensed version of the codebase used to conduct the experiments in the paper (please get in touch if you find errors/have any suggestions).
+
+PSA is a simple algorithm that uses Gaussian Differential Privacy for providing privacy guarantees during steering of the LLM residual stream for alignment.
+
+
 > **Abstract:**
 > Aligning Large Language Models (LLMs) with human values and away from undesirable behaviors (such as hallucination) has become increasingly important. 
 > Recently, steering LLMs towards a desired behavior via activation editing has emerged as an effective method to mitigate harmful  generations at inference-time. 
@@ -52,7 +57,7 @@ pip install -r requirements.txt
 ---
 
 ### Private Steering
-The following command can be used to reproduce the main results (Section 5 from the paper). Use the `--model` argument to experiment with different LLMs. An additional `--clip` argument controls the clipping factor (see Algorithm 1 in the paper). For more information on the `--dataset` argument, please see [datasets.md](./iclr2025_psa/datasets/datasets.md). 
+The following command can be used to reproduce the main results (Section 5 from the paper). Use the `--model` argument to experiment with different LLMs. An additional `--clip` argument controls the clipping factor (see Algorithm 1 in the paper). For more information on the `--dataset` argument, please see [datasets.md](./iclr2025_psa/datasets/README.md). 
 ```bash
 python run.py \
 --model "meta-llama/Llama-2-7B-chat-hf" \
