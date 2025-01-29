@@ -52,7 +52,7 @@ pip install -r requirements.txt
 ---
 
 ### Private Steering
-
+The following command can be used to reproduce the main results (Section 5 from the paper). Use the `--model` argument to experiment with different LLMs. An additional `--clip` argument controls the clipping factor (see Algorithm 1 in the paper). For more information on the `--dataset` argument, please see [datasets.md](./iclr2025_psa/datasets/datasets.md). 
 ```bash
 python run.py \
 --model "meta-llama/Llama-2-7B-chat-hf" \
