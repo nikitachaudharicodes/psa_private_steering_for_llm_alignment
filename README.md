@@ -1,6 +1,6 @@
 # PSA: Differentially Private Steering for LLM Alignment
 
-[![Arxiv](https://img.shields.io/badge/Arxiv-YYMM.NNNNN-red?style=flat-square&logo=arxiv&logoColor=white)](https://put-here-your-paper.com)
+[![Arxiv](https://img.shields.io/badge/Arxiv-2501.18532-red?style=flat-square&logo=arxiv&logoColor=white)](https://arxiv.org/abs/2501.18532)
 [![License](https://img.shields.io/github/license/UKPLab/POATE-attack)](https://opensource.org/licenses/Apache-2.0)
 [![Python Versions](https://img.shields.io/badge/Python-3.10-blue.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![CI](https://github.com/UKPLab/iclr2025-psa/actions/workflows/main.yml/badge.svg)](https://github.com/UKPLab/iclr2025-psa/actions/workflows/main.yml)
