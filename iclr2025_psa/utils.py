@@ -42,7 +42,7 @@ MWEData = list[dict[str, str]]
 
 def make_pos_neg_pair(mwe_data: MWEData, tokenizer) -> tuple[str, str]:
     """ Creates a (positive, negative) pair for getting contrastive activations """
-    if 'llama' or 'mistral' in tokenizer.name_or_path.lower():
+    if 'llama' in tokenizer.name_or_path.lower() or 'mistral' in tokenizer.name_or_path.lower():
         pos = prompt_template.format(
             question = mwe_data['question'],
             answer = mwe_data['answer_matching_behavior']   
