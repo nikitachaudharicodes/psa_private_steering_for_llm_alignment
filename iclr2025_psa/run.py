@@ -35,18 +35,18 @@ def get_results(dataset, prompt=None, pca=False, layers=[11,12,13,14,15], noise_
     test_dataset = make_dataset(test_data, tokenizer)
 
 
-    def fisher_discriminant(pos, neg):
-        mu_pos = pos.mean(dim=0)
-        mu_neg = neg.mean(dim=0)
-        pos_centered = pos - mu_pos
-        neg_centered = neg - mu_neg
+    # def fisher_discriminant(pos, neg):
+    #     mu_pos = pos.mean(dim=0)
+    #     mu_neg = neg.mean(dim=0)
+    #     pos_centered = pos - mu_pos
+    #     neg_centered = neg - mu_neg
 
-        cov_pos = pos_centered.T @ pos_centered / (pos.shape[0] - 1)
-        cov_neg = neg_centered.T @ neg_centered / (neg.shape[0] - 1)
-        cov = cov_pos + cov_neg + 1e-4 * torch.eye(pos.shape[1], device=pos.device)
+    #     cov_pos = pos_centered.T @ pos_centered / (pos.shape[0] - 1)
+    #     cov_neg = neg_centered.T @ neg_centered / (neg.shape[0] - 1)
+    #     cov = cov_pos + cov_neg + 1e-4 * torch.eye(pos.shape[1], device=pos.device)
 
-        direction = torch.linalg.solve(cov, mu_pos - mu_neg)
-        return direction / torch.norm(direction)
+    #     direction = torch.linalg.solve(cov, mu_pos - mu_neg)
+    #     return direction / torch.norm(direction)
 
 
     def private_fisher_discriminant(pos, neg, clip=20, noise_multiplier=0.02):
@@ -145,20 +145,20 @@ def get_results(dataset, prompt=None, pca=False, layers=[11,12,13,14,15], noise_
     #         if prompt:
     #             generate_text(prompt, model, tokenizer)
 
-    print("Fisher Discriminant Steering")
-    fisher_steering = train_steering_vector(
-        model,
-        tokenizer,
-        train_dataset,
-        read_token_index=-2,
-        show_progress=True,
-        aggregator=fisher_discriminant,
-        layers=layers
-    )
-    for multiplier in (-2, 0, 2):
-        with fisher_steering.apply(model, multiplier=multiplier, min_token_index=0):
-            result = evaluate_model(model, tokenizer, test_dataset)
-            print(f"Fisher | {multiplier=} | {result=}")
+    # print("Fisher Discriminant Steering")
+    # fisher_steering = train_steering_vector(
+    #     model,
+    #     tokenizer,
+    #     train_dataset,
+    #     read_token_index=-2,
+    #     show_progress=True,
+    #     aggregator=fisher_discriminant,
+    #     layers=layers
+    # )
+    # for multiplier in (-2, 0, 2):
+    #     with fisher_steering.apply(model, multiplier=multiplier, min_token_index=0):
+    #         result = evaluate_model(model, tokenizer, test_dataset)
+    #         print(f"Fisher | {multiplier=} | {result=}")
 
     print("Private Fisher Discriminant Steering")
     private_fisher_steering = train_steering_vector(
